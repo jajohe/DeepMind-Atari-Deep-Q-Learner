@@ -34,6 +34,7 @@ sudo apt-get install -qqy ncurses-dev
 sudo apt-get install -qqy imagemagick
 sudo apt-get install -qqy unzip
 sudo apt-get install -qqy libqt4-dev
+sudo apt-get install -qqy libgd-dev
 sudo apt-get update
 
 
@@ -122,7 +123,8 @@ cd $PREFIX/src
 rm -rf lua-gd
 git clone https://github.com/ittner/lua-gd.git
 cd lua-gd
-sed -i "s/LUABIN=lua5.1/LUABIN=..\/..\/bin\/luajit/" Makefile
+sed -i 's/LUABIN=lua5.1/LUABIN=..\/..\/bin\/luajit/' Makefile
+sed -i 's/`pkg-config $(LUAPKG) --cflags`/-I..\/..\/include -L..\/..\/lib/' Makefile
 $PREFIX/bin/luarocks make
 RET=$?; if [ $RET -ne 0 ]; then echo "Error. Exiting."; exit $RET; fi
 echo "Lua-GD installation completed"
